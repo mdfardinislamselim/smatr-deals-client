@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+.gradient-text {
+  background: linear-gradient(125deg, #632ee3 5.68%, #9f62f2 88.38%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+* {
+  font-family: "Inter", sans-serif;
+}
+
+a.active {
+  color: #9f62f2;
+}
+
+.btn-primary {
+  @apply px-4 py-3 font-bold text-white rounded-sm bg-gradient-to-r from-[#632EE3] to-[#9F62F2] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg hover:shadow-[#632EE3]/30 cursor-pointer;
+}
+
+.btn-secondary {
+  @apply px-4 py-3 font-bold rounded-sm border-2 border-[#632EE3] bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-[#9F62F2] hover:from-[#9F62F2] hover:to-[#632EE3] cursor-pointer;
+}
