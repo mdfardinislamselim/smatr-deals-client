@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 import toast from "react-hot-toast";
 
-
 const Register = () => {
   const { createUser, googleSignIn } = useContext(AuthContext);
 
@@ -21,9 +20,31 @@ const Register = () => {
     }
 
     createUser(email, password)
-      .then((result) => {
-        const createdUser = result.user;
-        console.log(createdUser);
+      .then(() => {
+        // const createdUser = result.user;
+        const newUser = {
+          name: name,
+          email: email,
+          image: photoURL,
+        };
+        fetch("http://localhost:3000/user", {
+          method: "POST", // ✅ fixed spelling
+          headers: {
+            "Content-Type": "application/json", // capitalized key for consistency
+          },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error("Failed to save user");
+            return res.json();
+          })
+          .then((data) => {
+            console.log("✅ Data after user save:", data);
+          })
+          .catch((error) => {
+            console.error("❌ Error saving user:", error);
+          });
+        toast.success("Signed in success full");
       })
       .catch((error) => {
         console.error(error);
@@ -45,6 +66,30 @@ const Register = () => {
     }
     googleSignIn()
       .then((result) => {
+        const newUser = {
+          name: result.user.displayName,
+          email: result.user.email,
+          image: result.user.photoURL,
+        };
+
+        fetch("http://localhost:3000/user", {
+          method: "POST", // ✅ fixed spelling
+          headers: {
+            "Content-Type": "application/json", // capitalized key for consistency
+          },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error("Failed to save user");
+            return res.json();
+          })
+          .then((data) => {
+            console.log("✅ Data after user save:", data);
+          })
+          .catch((error) => {
+            console.error("❌ Error saving user:", error);
+          });
+
         toast.success("Signed in with Google!");
         console.log(result.user);
       })

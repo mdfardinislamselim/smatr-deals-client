@@ -5,11 +5,11 @@ import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);
-    const handelSingOut = () => {
-      logOut()
-        .then(toast.success("Logout successful!"))
-        .catch((error) => toast.error(error.message));
-    };
+  const handelSingOut = () => {
+    logOut()
+      .then(toast.success("Logout successful!"))
+      .catch((error) => toast.error(error.message));
+  };
   const linck = (
     <>
       <li className="font-bold">
@@ -18,15 +18,19 @@ const Navbar = () => {
       <li className="font-bold">
         <NavLink to={"add-product"}>All Adds</NavLink>
       </li>
-      <li className="font-bold">
-        <NavLink to={"my-products"}>My Adds</NavLink>
-      </li>
-      <li className="font-bold">
-        <NavLink to={"my-bids"}>My Bids</NavLink>
-      </li>
-      <li className="font-bold">
-        <NavLink to={"add-product"}>Create Add</NavLink>
-      </li>
+      {user && (
+        <>
+          <li className="font-bold">
+            <NavLink to={"my-products"}>My Adds</NavLink>
+          </li>
+          <li className="font-bold">
+            <NavLink to={"my-bids"}>My Bids</NavLink>
+          </li>
+          <li className="font-bold">
+            <NavLink to={"add-product"}>Create Add</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
   return (
