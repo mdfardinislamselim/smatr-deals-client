@@ -8,6 +8,7 @@ import MyBids from "../pages/MyBids";
 import ProductDetails from "../pages/ProductDetails";
 import Register from "../pages/Register";
 import SingIn from "../pages/SingIn";
+import PrivateRoute from "../provider/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -16,11 +17,16 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader: () => fetch("http://localhost:3000/latest-products"),
         element: <Home />,
       },
       {
         path: "add-product",
-        element: <AddProduct />,
+        element: (
+          <PrivateRoute>
+            <AddProduct />
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-products",
@@ -28,15 +34,24 @@ const router = createBrowserRouter([
       },
       {
         path: "my-products",
-        element: <MyProducts />,
+        element: (
+          <PrivateRoute>
+            <MyProducts />
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-bids",
-        element: <MyBids />,
+        element: (
+          <PrivateRoute>
+            <MyBids />
+          </PrivateRoute>
+        ),
       },
       {
         path: "product/:id",
-        element: <ProductDetails></ProductDetails>,
+        loader: ({params}) => fetch(`http://localhost:3000/products/${params.id}`),
+        element: <ProductDetails />,
       },
       {
         path: "register",

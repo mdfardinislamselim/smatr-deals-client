@@ -24,5 +24,5 @@ a.active {
 }
 
 .btn-secondary {
-  @apply px-4 py-3 font-bold rounded-sm border-2 border-[#632EE3] bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-[#9F62F2] hover:from-[#9F62F2] hover:to-[#632EE3] cursor-pointer;
+  @apply px-4 text-center py-3 font-bold rounded-sm border-2 border-[#632EE3] bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-[#9F62F2] hover:from-[#9F62F2] hover:to-[#632EE3] cursor-pointer ;
 }

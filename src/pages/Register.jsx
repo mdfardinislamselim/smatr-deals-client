@@ -1,11 +1,15 @@
 import React, { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+// import { Link, useNavigate, useLocation, Navigate } from "react-router";
+
 import { AuthContext } from "../provider/AuthProvider";
 import toast from "react-hot-toast";
 
 const Register = () => {
   const { createUser, googleSignIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+
 
   const handelRegister = (e) => {
     e.preventDefault();
@@ -45,6 +49,7 @@ const Register = () => {
             console.error("❌ Error saving user:", error);
           });
         toast.success("Signed in success full");
+        navigate("/");
       })
       .catch((error) => {
         console.error(error);
@@ -91,6 +96,7 @@ const Register = () => {
           });
 
         toast.success("Signed in with Google!");
+        navigate("/");
         console.log(result.user);
       })
       .catch((error) => toast.error(error.message));
