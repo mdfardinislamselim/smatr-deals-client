@@ -1,12 +1,14 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLoaderData } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
+import BidsTable from "../components/BidsTable";
 
 const ProductDetails = () => {
   const product = useLoaderData();
   const bidModalRef = useRef(null);
   const { user } = useContext(AuthContext);
+  const [bids, setBids] = useState([]);
 
   const {
     category,
@@ -25,6 +27,13 @@ const ProductDetails = () => {
     usage,
     _id,
   } = product;
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/products/bids/${_id}`)
+      .then((res) => res.json())
+      .then((data) => setBids(data));
+  }, [_id]);
+  console.log(bids);
 
   // ✅ Open modal
   const handleBidModalOpen = () => {
@@ -64,6 +73,9 @@ const ProductDetails = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          newBid._id = data.insertedId;
+          const newBids = [...bids, newBid];
+          setBids(newBids);
         }
       })
       .catch((err) => console.error("Bid submission failed:", err));
@@ -204,7 +216,7 @@ const ProductDetails = () => {
 
             {/* Price */}
             <input
-              type="number"
+              type="text"
               name="bid"
               placeholder="Place your Price"
               className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
@@ -231,6 +243,10 @@ const ProductDetails = () => {
           </form>
         </div>
       </dialog>
+
+      {/*  */}
+
+      <BidsTable bids={bids}></BidsTable>
     </div>
   );
 };
